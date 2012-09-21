@@ -13,29 +13,31 @@ func main() {
 /*
  *   "Discover the largest produkt of five consecutive digits in the 1000-digit number."
  */
-    n := 0
-    liste := ""    
+    größteZahl := 0
+    faktorenListe := ""  
     for i := range zahl {
+		// Bei weniger als 5 Zeichen, Schleife beenden
 		if i > len(zahl) - 5 {
 			break
 		}
-		p := 1
-		np,_ := strconv.Atoi(zahl[i:i+5])
+		// Umwandeln der nächsten 5 Zeichen in eine Zahl
+		teilZahl,_ := strconv.Atoi(zahl[i:i+5])
+		neueZahl := 1
 		for j := 1; j <= 5; j++ {
-			p *= np % 10
-			np /= 10
+			neueZahl *= teilZahl % 10
+			teilZahl /= 10
 		}
-        if p > n {
-            n = p
-            liste = ""
-            liste += zahl[i:i+5]
+		// Ist die neue Zahl größer als die bisherige größte Zahl?
+        if neueZahl > größteZahl {
+            größteZahl = neueZahl
+            faktorenListe = zahl[i:i+5]
 		}
 	}
     print("Lösung: ")
     for i := 0; i <= 4; i++ {
-        fmt.Printf("%c * ", liste[i])
+        fmt.Printf("%c * ", faktorenListe[i])
 	}
-    fmt.Println("=", n)
+    fmt.Println("=", größteZahl)
 }
 
 // Lösung: 9 * 9 * 8 * 7 * 9 = 40824
